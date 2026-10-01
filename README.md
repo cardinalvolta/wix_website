@@ -9,7 +9,8 @@ Static homepage with local images and fonts, a recruiting dialog, email applicat
 - `hiring.js`: full job description and dialog interactions.
 - `assets/`: only referenced images, icons and font.
 - `tests/hiring.test.mjs`: email link and dialog regression tests.
-- `wrangler.jsonc`: Cloudflare Pages deployment configuration.
+- `build.mjs`: copies only website files and referenced assets into `dist/`.
+- `wrangler.jsonc`: Cloudflare Workers Static Assets deployment configuration.
 
 ## Applications
 
@@ -21,13 +22,25 @@ The general contact email remains `info@cardinalvolta.com`. No application backe
 
 Open `index.html` directly in a browser. No build step is needed. Calendly requires an internet connection.
 
-Deploy from this directory, replacing the project name with the actual Cloudflare Pages project:
+The Wrangler name is `wix-replica`, matching the existing Cloudflare Worker. This name is not the Git repository name or custom domain.
+
+Deploy from this directory:
 
 ```powershell
-npx wrangler pages deploy . --project-name YOUR_PAGES_PROJECT
+npx wrangler deploy
 ```
 
-For Git-connected Pages, use no build command and `.` as the output directory.
+Wrangler automatically runs `node build.mjs` before deploying. Only `dist/` is uploaded; README, tests, Git files and credentials are excluded. Do not commit `dist/`.
+
+For Cloudflare Workers Git builds:
+
+- Build command: leave empty (Wrangler runs the configured build).
+- Deploy command: `npx wrangler deploy`.
+- Preview command, if shown: `npx wrangler preview`.
+- Root directory: `/` when this website is the repository root.
+- Production branch: `main`.
+
+To generate the deployment files separately, run `node build.mjs`. No Jekyll, framework installation, Worker script or Pages configuration is required.
 
 ## Test
 

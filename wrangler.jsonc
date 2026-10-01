@@ -1,4 +1,11 @@
 {
-  "pages_build_output_dir": ".",
-  "compatibility_date": "2026-09-30"
+  "name": "wix-replica",
+  "compatibility_date": "2026-09-30",
+  "build": {
+    "command": "node build.mjs"
+  },
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "404-page"
+  }
 }
